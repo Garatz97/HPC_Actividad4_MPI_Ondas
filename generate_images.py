@@ -1,36 +1,31 @@
-from array import array
 import matplotlib.pyplot as plt
 import csv
-import numpy as np
 
 X = []
 Uinit = []
 Ufinal = []
 
-# opening the CSV file
-with open('initialCondition.csv', mode ='r')as file:
-   
-  # reading the CSV file
-  csvFile = csv.reader(file)
- 
-  # displaying the contents of the CSV file
-  for lines in csvFile:
-        X.append(float(lines[0]))
-        Uinit.append(float(lines[1]))
+# Leer condición inicial
+with open('initialCondition.csv', mode='r') as file:
+    csvFile = csv.reader(file)
+    for lines in csvFile:
+        if lines: # Evita errores si hay líneas en blanco al final
+            X.append(float(lines[0]))
+            Uinit.append(float(lines[1]))
 
-
-with open('final.csv', mode ='r')as file:
-   
-  # reading the CSV file
-  csvFile = csv.reader(file)
- 
-  # displaying the contents of the CSV file
-  for lines in csvFile:
-        Ufinal.append(float(lines[1]))
+# Leer estado final
+with open('final.csv', mode='r') as file:
+    csvFile = csv.reader(file)
+    for lines in csvFile:
+        if lines:
+            Ufinal.append(float(lines[1]))
         
-#print(X, Uinit)
-plt.plot(X, Uinit, '.-', color = 'k', label="Init")
-plt.plot(X, Ufinal, '.-', color = 'r', label="Final")
+# Generar la gráfica
+plt.plot(X, Uinit, '.-', color='k', label="Init")
+plt.plot(X, Ufinal, '.-', color='r', label="Final")
 plt.legend()
 plt.grid()
+plt.title("Simulación de Ondas 1D - HPC MPI")
+plt.xlabel("Posición (X)")
+plt.ylabel("Amplitud (U)")
 plt.show()
